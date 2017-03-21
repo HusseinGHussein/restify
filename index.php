@@ -6,8 +6,9 @@ require_once('Restify.php');
 
 $r = new Restify();
 
-$result = ($r->get("http://www.thomas-bayer.com/sqlrest/CUSTOMER/")->xml());
+$result = ($r->get("https://newsapi.org/v1/articles",array("source"=>"bbc-news","apiKey"=>"your_api_key"))->json());
 
-var_dump($result);
+
+$r->dd($result);
 
 ?>

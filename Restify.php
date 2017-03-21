@@ -18,6 +18,8 @@ class Restify {
 		curl_setopt($this->curlObj,CURLOPT_AUTOREFERER,true);
 		curl_setopt($this->curlObj,CURLOPT_FRESH_CONNECT,true);
 		curl_setopt($this->curlObj,CURLOPT_RETURNTRANSFER,true);
+		curl_setopt($this->curlObj, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($this->curlObj, CURLOPT_SSL_VERIFYPEER, false);
 	}
 	
 	private function execute($url)
@@ -25,6 +27,9 @@ class Restify {
 		curl_setopt($this->curlObj,CURLOPT_HTTPHEADER,$this->httpHeader);
 		curl_setopt($this->curlObj,CURLOPT_URL,$url);
 		$this->result = curl_exec($this->curlObj);
+		if($this->result===false){
+			$this->result = curl_errno($this->curlObj)."|".curl_error($this->curlObj);
+		}
 		return $this;
 	}
 	
@@ -178,6 +183,13 @@ class Restify {
 		}
 
 		return $data;
+	}
+
+	public function dd($data){
+		echo "<pre>";
+		var_dump($data);
+		echo "</pre>";
+		die();
 	}
 
 }
